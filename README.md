@@ -1,2 +1,3 @@
 # indexer.cocoapods.org
-Trunk -> Algolia indexer 
+
+Trunk -> Algolia indexer
