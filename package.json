@@ -38,6 +38,7 @@
     "@types/bunyan": "^1.8.4",
     "@types/dotenv": "^4.0.3",
     "@types/jest": "^22.2.3",
+    "@types/pg": "^7.4.8",
     "babel-plugin-module-resolver": "^3.0.0",
     "jest": "22.4.3",
     "ts-jest": "^22.4.6",
@@ -49,6 +50,7 @@
   "dependencies": {
     "algoliasearch": "^3.27.1",
     "bunyan": "^1.8.12",
-    "dotenv": "^5.0.1"
+    "dotenv": "^5.0.1",
+    "pg": "^7.4.3"
   }
 }
