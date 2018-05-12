@@ -1,3 +1,7 @@
 {
-  "recommendations": ["eg2.tslint", "Orta.vscode-jest"]
+  "recommendations": [
+    "eg2.tslint",
+    "Orta.vscode-jest",
+    "esbenp.prettier-vscode"
+  ]
 }
