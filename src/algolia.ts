@@ -5,7 +5,7 @@ export class Index {
   private _client: algoliasearch.Client;
   private _index: algoliasearch.Index;
 
-  constructor(indexName: string = process.env.ALGOLIA_INDEX_NAME) {
+  constructor(indexName: string | undefined = process.env.ALGOLIA_INDEX_NAME) {
     if (!process.env.ALGOLIA_APP_ID) {
       throw new Error(
         'npm-search: Please provide the `ALGOLIA_APP_ID` env variable and restart'
