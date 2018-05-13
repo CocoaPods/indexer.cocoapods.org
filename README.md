@@ -32,4 +32,16 @@ yarn install
 yarn jest
 ```
 
+Once you see the test passed you can run the server locally:
+
+```sh
+yarn dev
+```
+
+Or alternatively:
+
+```sh
+yarn build && yarn start
+```
+
 I'd recommend using VS Code for editing, this project includes extension recommendations.
