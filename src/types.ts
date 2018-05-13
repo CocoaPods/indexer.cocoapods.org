@@ -1,20 +1,45 @@
 export interface Pod {
   name: string;
-  version: string; // semver
+  /**
+   * current version as a string (SemVer)
+   */
+  version: string;
   summary: string;
-  homepage: string; // url
-  license: string; // validates
+  /**
+   * Home page of the project (url)
+   */
+  homepage: string;
+  /**
+   * Any OSI-compliant license
+   */
+  license: string;
   authors: {
-    [key: string]: string; // email
-  };
+    name: string;
+    email: string;
+  }[];
+  /**
+   * supported version of each platform
+   */
   platforms: { [key in Partial<'ios' | 'mac' | 'tv'>]: string };
   source: {
-    git: string; // git url
-    tag: string; // semver
+    /**
+     * url
+     */
+    git: string;
+    /**
+     * (git) tag of this version
+     */
+    tag: string;
   };
-  source_files: string; // path
+  /**
+   * A path the the source files
+   */
+  source_files: string;
   requires_arc: boolean;
-  swift_version: string; // version
+  /**
+   * minimal supported swift version as a string
+   */
+  swift_version: string;
 }
 
 export type AlgoliaRecord = { objectID: string };
