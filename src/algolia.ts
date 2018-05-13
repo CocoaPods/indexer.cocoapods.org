@@ -2,8 +2,8 @@ import algoliasearch from 'algoliasearch';
 import { IndexablePod } from './types';
 
 export class Index {
-  _client: algoliasearch.Client;
-  _index: algoliasearch.Index;
+  private _client: algoliasearch.Client;
+  private _index: algoliasearch.Index;
 
   constructor(indexName: string = process.env.ALGOLIA_INDEX_NAME) {
     if (!process.env.ALGOLIA_APP_ID) {
@@ -16,13 +16,18 @@ export class Index {
         'npm-search: Please provide the `ALGOLIA_API_KEY` env variable and restart'
       );
     }
+    if (!indexName) {
+      throw new Error(
+        'npm-search: Please provide the `ALGOLIA_INDEX_NAME` env variable and restart'
+      );
+    }
 
-    const client = algoliasearch(
+    this._client = algoliasearch(
       process.env.ALGOLIA_APP_ID,
       process.env.ALGOLIA_API_KEY
     );
-    this._client = client;
-    this._index = client.initIndex(indexName);
+
+    this._index = this._client.initIndex(indexName);
   }
 
   /**
