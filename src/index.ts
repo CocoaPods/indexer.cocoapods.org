@@ -2,7 +2,8 @@ import { config } from 'dotenv';
 config();
 import log from './log.js';
 import { Index } from './algolia';
-import { trunk, setup } from './database';
+import { trunk } from './database';
+import { IndexablePod } from './types.js';
 
 log.info(
   'Welcome! We will now start indexing to',
@@ -15,17 +16,9 @@ export const test = {
   isMySetupWorking: true,
 };
 
-//setup();
+const fetchAllQuery = `select 
 
-// fetch from db and save individually
-// make sure to add `objectID = name`
-// index.savePods([]);
-
-
-const sqlQuery =
-  `select 
-
-pods.normalized_name as objectID, 
+pods.normalized_name as "objectID", 
 specification_data
 
 from pods, pod_versions, commits 
@@ -33,19 +26,38 @@ where pods.id = pod_versions.pod_id
 and commits.pod_version_id = pod_versions.id
 limit 100`;
 
-trunk.connect()
-trunk.query(sqlQuery, (err, res) => {
+async function fetchAll(): Promise<IndexablePod[]> {
+  await trunk.connect();
+  const { rows } = await trunk.query(fetchAllQuery);
 
-  //1. Capitalize objectid to objectID because pg returns lowercase json
-  res.rows.map(current => {
-    current['objectID'] = current['objectid'];
-    delete current['objectid'];
-  })
-  //2. Reject pods that don't contain a json summary
-  res.rows = res.rows.filter(current => {
-    current = JSON.parse(current.specification_data)["summary"]
-    return current && !current.includes("Unparsable at `trunk` import time.")
-  });
-  index.savePods(res.rows);
+  const pods: IndexablePod[] = rows
+    .map(({ objectID, specification_data }) => {
+      const specificationData = JSON.parse(specification_data);
+      const authors = Object.entries(specificationData.authors || {}).map(
+        ([name, email]) => ({
+          name,
+          email,
+        })
+      );
 
-})
+      return {
+        ...specificationData,
+        objectID,
+        authors,
+      };
+    })
+    .filter(
+      ({ summary }) =>
+        summary && !summary.includes('Unparsable at `trunk` import time.')
+    );
+
+  return pods;
+}
+
+async function main() {
+  return index.savePods(await fetchAll());
+}
+
+main()
+  .then(({ taskID }) => log.info('Initial indexing finished', { taskID }))
+  .catch(err => log.error(err, 'Initial indexing has not been completed'));
