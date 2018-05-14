@@ -17,24 +17,28 @@ export interface SpecificationData {
         name: string;
         text: string;
       }
-    | string;
-  authors?: {
-    [name: string]: string;
-  };
+    | string; // can be just the type or a ruby hash too
+  authors?:
+    | {
+        [name: string]: string;
+      }
+    | string; // can also be a ruby hash
   /**
    * supported version of each platform
    */
   platforms?: { [key in Partial<'ios' | 'mac' | 'tv'>]: string };
-  source: {
-    /**
-     * url
-     */
-    git: string;
-    /**
-     * (git) tag of this version
-     */
-    tag: string;
-  };
+  source:
+    | {
+        /**
+         * url
+         */
+        git: string;
+        /**
+         * (git) tag of this version
+         */
+        tag: string;
+      }
+    | string; // can also be a ruby hash
   /**
    * A path the the source files
    */
@@ -70,7 +74,7 @@ export interface Pod {
    * supported version of each platform
    */
   platforms?: { [key in Partial<'ios' | 'mac' | 'tv'>]: string };
-  source: {
+  source?: {
     /**
      * url
      */
