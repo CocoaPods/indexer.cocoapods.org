@@ -1,5 +1,5 @@
 import algoliasearch from 'algoliasearch';
-import { IndexablePod } from './types';
+import { Pod } from './types';
 
 export class Index {
   private _client: algoliasearch.Client;
@@ -33,7 +33,7 @@ export class Index {
   /**
    * Add a batch of Pods
    */
-  async savePods(objects: IndexablePod[]) {
+  async savePods(objects: Pod[]) {
     return this._index.saveObjects(objects);
   }
 
