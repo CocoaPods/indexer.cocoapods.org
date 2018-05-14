@@ -1,9 +1,12 @@
 import algoliasearch from 'algoliasearch';
+import chunk from 'lodash/chunk';
 import { Pod } from './types';
+import log from './log';
 
 export class Index {
   private _client: algoliasearch.Client;
   private _index: algoliasearch.Index;
+  private indexName: string;
 
   constructor(indexName: string | undefined = process.env.ALGOLIA_INDEX_NAME) {
     if (!process.env.ALGOLIA_APP_ID) {
@@ -28,13 +31,22 @@ export class Index {
     );
 
     this._index = this._client.initIndex(indexName);
+    this.indexName = indexName;
   }
 
   /**
    * Add a batch of Pods
    */
-  async savePods(objects: Pod[]) {
-    return this._index.saveObjects(objects);
+  async savePods(
+    objects: Pod[],
+    { batchSize = 1000 }: { batchSize?: number } = {}
+  ) {
+    const chunks = chunk(objects, batchSize);
+    const operations = chunks.map(chunk => {
+      log.info(`Indexing ${chunk.length} pods to ${this.indexName}`);
+      this._index.saveObjects(chunk);
+    });
+    return Promise.all(operations);
   }
 
   /**
@@ -51,15 +63,14 @@ export class Index {
     synonyms: algoliasearch.Synonym[];
     rules: algoliasearch.Rule[];
   }) {
+    log.info('setting settings on', this.indexName);
     await this._index.setSettings(settings);
     await this._index.batchSynonyms(synonyms, {
       replaceExistingSynonyms: true,
     });
-    const { taskID } = await this._index.batchRules(rules, {
+    return await this._index.batchRules(rules, {
       clearExistingRules: true,
     });
-
-    return this._index.waitTask(taskID);
   }
 
   /**
@@ -67,21 +78,24 @@ export class Index {
    *
    * Note that this index will still exist, but the destination will be overwritten
    */
-  async migrateTo(destination: Index) {
-    return this._client.copyIndex(
-      // @ts-ignore (this should be added to the typings)
-      this._index.indexName,
-      // @ts-ignore (this should be added to the typings)
-      destination._index.indexName,
-      ['settings', 'synonyms', 'rules']
-    );
+  async migrateTo(destinationIndex: Index) {
+    const source = this.indexName;
+    const destination = destinationIndex.indexName;
+
+    log.info('moving', source, 'to', destination);
+    // @ts-ignore https://github.com/DefinitelyTyped/DefinitelyTyped/pull/25763
+    return this._client.copyIndex(source, destination);
+  }
+
+  async waitTask({ taskID }: algoliasearch.Task) {
+    return this._index.waitTask(taskID);
   }
 
   /**
    * clear and delete this index
    */
   async destroy() {
-    // @ts-ignore (this should be added to the typings)
-    return this._client.deleteIndex(this._index.indexName);
+    log.info('removing the index', this.indexName);
+    return this._client.deleteIndex(this.indexName);
   }
 }
