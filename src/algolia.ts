@@ -50,6 +50,11 @@ export class Index {
     return tasks[tasks.length - 1];
   }
 
+  async savePod(object: Pod) {
+    log.info(`Indexing ${object.objectID} pods to ${this.indexName}`);
+    return this._index.saveObject(object);
+  }
+
   /**
    * Set all settings.
    *
