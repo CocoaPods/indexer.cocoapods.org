@@ -1,3 +1,4 @@
+import gravatarUrl from 'gravatar-url';
 import { SpecificationData, Pod } from './types';
 import log from './log';
 import { Row } from './index';
@@ -16,9 +17,9 @@ export function formatPod({ objectID, specification_data }: Row): Pod {
     version,
     homepage,
     platforms,
-    source_files,
     requires_arc,
     swift_version,
+    dependencies,
   } = specificationData;
 
   return {
@@ -31,9 +32,9 @@ export function formatPod({ objectID, specification_data }: Row): Pod {
     authors,
     platforms,
     source,
-    source_files,
     requires_arc,
     swift_version,
+    dependencies,
   };
 }
 
@@ -46,12 +47,26 @@ function getLicense({ license }: SpecificationData) {
 function getAuthors({ authors }: SpecificationData) {
   if (typeof authors === 'string') {
     const [name, email] = authors.split(' => '); // can also be a ruby hash (should be fixed in the DB)
-    return [{ name, email }];
+    return [{ name, email, ...getAvatar(email) }];
   }
-  return Object.entries(authors || {}).map(([name, email]) => ({
+  if (Array.isArray(authors)) {
+    return authors.map(author => getAuthor(author));
+  }
+  return [getAuthor(authors)];
+}
+
+function getAuthor(author: { [name: string]: string } | undefined) {
+  return Object.entries(author || {}).map(([name, email]) => ({
     name,
     email,
-  }));
+    ...getAvatar(email),
+  }))[0];
+}
+
+function getAvatar(email: string = '') {
+  if (email && email.includes('@')) {
+    return { avatar: gravatarUrl(email) };
+  }
 }
 
 function truncate(text: string | undefined, length: number) {

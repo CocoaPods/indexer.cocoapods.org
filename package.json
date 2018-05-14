@@ -46,6 +46,7 @@
     "@types/algoliasearch": "^3.27.1",
     "@types/bunyan": "^1.8.4",
     "@types/dotenv": "^4.0.3",
+    "@types/gravatar-url": "^2.0.0",
     "@types/jest": "^22.2.3",
     "@types/lodash": "^4.14.108",
     "@types/pg": "^7.4.8",
@@ -61,6 +62,7 @@
     "algoliasearch": "^3.27.1",
     "bunyan": "^1.8.12",
     "dotenv": "^5.0.1",
+    "gravatar-url": "^2.0.0",
     "lodash": "^4.17.10",
     "pg": "^7.4.3"
   }

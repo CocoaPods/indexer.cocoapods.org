@@ -3,7 +3,7 @@ config();
 import log from './log.js';
 import { Index } from './algolia';
 import { trunk } from './database';
-import { Pod, SpecificationData } from './types';
+import { Pod } from './types';
 import { settings, synonyms, rules } from './settings';
 import { formatPod } from './formatPod';
 

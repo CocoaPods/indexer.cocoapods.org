@@ -48,6 +48,7 @@ export interface SpecificationData {
    * minimal supported swift version as a string
    */
   swift_version: string;
+  dependencies?: any;
 }
 
 export interface Pod {
@@ -69,6 +70,7 @@ export interface Pod {
   authors?: {
     name: string;
     email: string;
+    avatar?: string;
   }[];
   /**
    * supported version of each platform
@@ -84,13 +86,10 @@ export interface Pod {
      */
     tag: string;
   };
-  /**
-   * A path the the source files
-   */
-  source_files: string;
-  requires_arc: boolean;
+  requires_arc?: boolean;
   /**
    * minimal supported swift version as a string
    */
-  swift_version: string;
+  swift_version?: string;
+  dependencies?: any;
 }
