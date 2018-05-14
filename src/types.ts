@@ -4,22 +4,27 @@ export interface SpecificationData {
    * current version as a string (SemVer)
    */
   version: string;
-  summary: string;
+  summary?: string;
   /**
    * Home page of the project (url)
    */
-  homepage: string;
+  homepage?: string;
   /**
    * Any OSI-compliant license
    */
-  license: string;
+  license?:
+    | {
+        name: string;
+        text: string;
+      }
+    | string;
   authors?: {
     [name: string]: string;
   };
   /**
    * supported version of each platform
    */
-  platforms: { [key in Partial<'ios' | 'mac' | 'tv'>]: string };
+  platforms?: { [key in Partial<'ios' | 'mac' | 'tv'>]: string };
   source: {
     /**
      * url
@@ -48,15 +53,15 @@ export interface Pod {
    * current version as a string (SemVer)
    */
   version: string;
-  summary: string;
+  summary?: string;
   /**
    * Home page of the project (url)
    */
-  homepage: string;
+  homepage?: string;
   /**
    * Any OSI-compliant license
    */
-  license: string;
+  license?: string;
   authors?: {
     name: string;
     email: string;
@@ -64,7 +69,7 @@ export interface Pod {
   /**
    * supported version of each platform
    */
-  platforms: { [key in Partial<'ios' | 'mac' | 'tv'>]: string };
+  platforms?: { [key in Partial<'ios' | 'mac' | 'tv'>]: string };
   source: {
     /**
      * url

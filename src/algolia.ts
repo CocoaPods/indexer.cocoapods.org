@@ -44,9 +44,10 @@ export class Index {
     const chunks = chunk(objects, batchSize);
     const operations = chunks.map(chunk => {
       log.info(`Indexing ${chunk.length} pods to ${this.indexName}`);
-      this._index.saveObjects(chunk);
+      return this._index.saveObjects(chunk);
     });
-    return Promise.all(operations);
+    const tasks = await Promise.all(operations);
+    return tasks[tasks.length - 1];
   }
 
   /**
@@ -88,6 +89,7 @@ export class Index {
   }
 
   async waitTask({ taskID }: algoliasearch.Task) {
+    log.info(`Waiting for Algolia task ${taskID} on ${this.indexName}`);
     return this._index.waitTask(taskID);
   }
 

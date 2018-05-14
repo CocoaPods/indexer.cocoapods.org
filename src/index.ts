@@ -5,6 +5,7 @@ import { Index } from './algolia';
 import { trunk } from './database';
 import { Pod, SpecificationData } from './types';
 import { settings, synonyms, rules } from './settings';
+import { formatPod } from './formatPod';
 
 log.info(
   'Welcome! We will now start indexing to',
@@ -26,9 +27,9 @@ specification_data
 from pods, pod_versions, commits 
 where pods.id = pod_versions.pod_id 
 and commits.pod_version_id = pod_versions.id
-limit 100`;
+limit 100000`;
 
-type Row = { objectID: string; specification_data: string };
+export type Row = { objectID: string; specification_data: string };
 
 async function fetchAll(): Promise<Pod[]> {
   await trunk.connect();
@@ -37,25 +38,7 @@ async function fetchAll(): Promise<Pod[]> {
   log.info(`found ${rows.length} pods`);
 
   const pods: Pod[] = rows
-    .map(({ objectID, specification_data }) => {
-      const specificationData: SpecificationData = JSON.parse(
-        specification_data
-      );
-      const authors = Object.entries(specificationData.authors || {}).map(
-        ([name, email]) => ({
-          name,
-          email,
-        })
-      );
-
-      log.debug('transforming', objectID, specificationData);
-
-      return {
-        ...specificationData,
-        objectID,
-        authors,
-      };
-    })
+    .map(formatPod)
     .filter(
       ({ summary }) =>
         summary && !summary.includes('Unparsable at `trunk` import time.')
@@ -76,7 +59,9 @@ async function main() {
 
   await bootstrapIndex.waitTask(await bootstrapIndex.destroy());
 
-  await bootstrapIndex.savePods(await fetchAll());
+  await bootstrapIndex.waitTask(
+    await bootstrapIndex.savePods(await fetchAll())
+  );
 
   await bootstrapIndex.waitTask(
     await bootstrapIndex.setAllSettings({
@@ -86,7 +71,9 @@ async function main() {
     })
   );
 
-  return await bootstrapIndex.migrateTo(mainIndex);
+  return await bootstrapIndex.waitTask(
+    await bootstrapIndex.migrateTo(mainIndex)
+  );
   // add here: listening for changes
 }
 
