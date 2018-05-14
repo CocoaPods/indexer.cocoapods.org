@@ -92,4 +92,8 @@ export interface Pod {
    */
   swift_version?: string;
   dependencies?: any;
+  downloads: {
+    lastMonth: number;
+    appsTouched: number;
+  };
 }

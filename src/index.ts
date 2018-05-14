@@ -2,10 +2,8 @@ import { config } from 'dotenv';
 config();
 import log from './log.js';
 import { Index } from './algolia';
-import { trunk } from './database';
-import { Pod } from './types';
+import { fetchAll } from './database';
 import { settings, synonyms, rules } from './settings';
-import { formatPod } from './formatPod';
 
 log.info(
   'Welcome! We will now start indexing to',
@@ -19,44 +17,12 @@ export const test = {
   isMySetupWorking: true,
 };
 
-const fetchAllQuery = `select 
-
-pods.normalized_name as "objectID", 
-specification_data
-
-from pods, pod_versions, commits 
-where pods.id = pod_versions.pod_id 
-and commits.pod_version_id = pod_versions.id
-limit 100000`;
-
-export type Row = { objectID: string; specification_data: string };
-
-async function fetchAll(): Promise<Pod[]> {
-  await trunk.connect();
-  const { rows }: { rows: Row[] } = await trunk.query(fetchAllQuery);
-
-  log.info(`found ${rows.length} pods`);
-
-  const pods: Pod[] = rows
-    .map(formatPod)
-    .filter(
-      ({ summary }) =>
-        summary && !summary.includes('Unparsable at `trunk` import time.')
-    );
-
-  log.info(`Will now index ${pods.length} pods`);
-
-  return pods;
-}
-
 function close() {
   log.info("That's all for now. Thanks!");
   process.exit(0);
 }
 
-async function main() {
-  // add here: do the bootstrap only after X amount of time
-
+async function bootstrap() {
   await bootstrapIndex.waitTask(await bootstrapIndex.destroy());
 
   await bootstrapIndex.waitTask(
@@ -74,7 +40,25 @@ async function main() {
   return await bootstrapIndex.waitTask(
     await bootstrapIndex.migrateTo(mainIndex)
   );
-  // add here: listening for changes
+}
+
+function watch() {
+  // TODO: listen to web hooks and update things in the index
+  return undefined;
+}
+
+function shouldRedoBootstrap() {
+  // TODO: check a stored time for last complete bootstrap vs time now
+  // redo if over a certain threshold
+  return true;
+}
+
+async function main() {
+  if (shouldRedoBootstrap()) {
+    await bootstrap();
+  }
+
+  return watch();
 }
 
 main()
