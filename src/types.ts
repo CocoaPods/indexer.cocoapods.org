@@ -94,6 +94,7 @@ export interface Pod {
   dependencies?: any;
   downloads: {
     lastMonth: number;
+    total: number;
     appsTouched: number;
   };
 }

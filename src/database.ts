@@ -12,6 +12,7 @@ export interface Row {
   objectID: string;
   specification_data: string;
   download_month: number;
+  download_total: number;
   app_total: number;
 }
 
@@ -22,6 +23,7 @@ export async function fetchAll(): Promise<Pod[]> {
   pods.normalized_name as "objectID", 
   specification_data,
   stats_metrics.download_month,
+  stats_metrics.download_total,
   stats_metrics.app_total
 
   from pods, pod_versions, commits, stats_metrics

@@ -7,6 +7,7 @@ export function formatPod({
   objectID,
   specification_data,
   download_month,
+  download_total,
   app_total,
 }: Row): Pod {
   const specificationData: SpecificationData = JSON.parse(specification_data);
@@ -42,6 +43,7 @@ export function formatPod({
     dependencies,
     downloads: {
       lastMonth: download_month,
+      total: download_total,
       appsTouched: app_total,
     },
   };

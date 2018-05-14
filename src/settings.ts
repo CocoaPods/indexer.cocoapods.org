@@ -11,7 +11,11 @@ export const settings: IndexSettings = {
     'exact',
     'custom',
   ],
-  customRanking: ['desc(downloads.lastMonth)', 'desc(downloads.appsTouched)'],
+  customRanking: [
+    'desc(downloads.lastMonth)',
+    'desc(downloads.appsTouched)',
+    'desc(downloads.total)',
+  ],
   attributesForFaceting: [
     'platforms',
     'license.type',
