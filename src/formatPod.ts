@@ -1,17 +1,13 @@
 import gravatarUrl from 'gravatar-url';
 import { SpecificationData, Pod } from './types';
 import log from './log';
-import { Row } from './database';
+import { ParsedRow } from './database';
 
 export function formatPod({
   objectID,
-  specification_data,
-  download_month,
-  download_total,
-  app_total,
-}: Row): Pod {
-  const specificationData: SpecificationData = JSON.parse(specification_data);
-
+  specificationData,
+  downloads,
+}: ParsedRow): Pod {
   log.debug('Now transforming', objectID, { specificationData });
 
   const authors = getAuthors(specificationData);
@@ -41,11 +37,7 @@ export function formatPod({
     requires_arc,
     swift_version,
     dependencies,
-    downloads: {
-      lastMonth: download_month,
-      total: download_total,
-      appsTouched: app_total,
-    },
+    downloads,
   };
 }
 

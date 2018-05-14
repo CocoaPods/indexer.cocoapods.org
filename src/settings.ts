@@ -22,6 +22,8 @@ export const settings: IndexSettings = {
     'requires_arc',
     'searchable(authors.name)',
   ],
+  attributeForDistinct: 'name',
+  distinct: true,
   // @ts-ignore
   camelCaseAttributes: ['name'],
 };
