@@ -2,6 +2,7 @@ import gravatarUrl from 'gravatar-url';
 import { SpecificationData, Pod } from './types';
 import log from './log';
 import { ParsedRow } from './database';
+import { SIGTTIN } from 'constants';
 
 export function formatPod({
   objectID,
@@ -18,6 +19,7 @@ export function formatPod({
   const source = deHash<{ git: string; tag: string }>(spec.source);
   const downloads = getDownloads(rawDownloads);
   const dependencies = getDependencies(spec);
+  const repoOwner = getRepoOwner(spec);
   const {
     name,
     version,
@@ -41,6 +43,7 @@ export function formatPod({
     swift_version,
     dependencies,
     downloads,
+    repoOwner,
   };
 }
 
@@ -108,4 +111,38 @@ function getDownloads(downloads: {
 
 function getDependencies({ dependencies = {} }: SpecificationData) {
   return Object.keys(dependencies);
+}
+
+function getRepoOwner({ source }: SpecificationData) {
+  if (typeof source === 'object' && source.git) {
+    const { user } = getRepositoryInfoFromHttpUrl(source.git);
+    return user;
+  }
+}
+
+/**
+ * Get info from urls like this: (has multiple packages in one repo, like babel does)
+ *  https://github.com/babel/babel/tree/master/packages/babel
+ *  https://gitlab.com/user/repo/tree/master/packages/project1
+ *  https://bitbucket.org/user/repo/src/ae8df4cd0e809a789e3f96fd114075191c0d5c8b/packages/project1/
+ *
+ * This function is like getGitHubRepoInfo (above), but support github, gitlab and bitbucket.
+ */
+function getRepositoryInfoFromHttpUrl(repository: string) {
+  const result = repository.match(
+    /^https?:\/\/(?:www\.)?((?:github|gitlab|bitbucket)).((?:com|org))\/([^/]+)\/([^/]+)(\/.+)?$/
+  );
+
+  if (!result || result.length < 6) {
+    return {};
+  }
+
+  const [, domain, domainTld, user, project, path = ''] = result;
+
+  return {
+    host: `${domain}.${domainTld}`,
+    user,
+    project,
+    path,
+  };
 }

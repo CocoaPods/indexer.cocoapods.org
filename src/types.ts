@@ -74,6 +74,7 @@ export interface Pod {
     email: string;
     avatar?: string;
   }[];
+  repoOwner?: string;
   /**
    * supported version of each platform
    */

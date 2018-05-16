@@ -1,7 +1,7 @@
 import { IndexSettings, Synonym, Rule } from 'algoliasearch';
 
 export const settings: IndexSettings = {
-  searchableAttributes: ['name', 'summary', 'authors.name'],
+  searchableAttributes: ['name', 'summary', 'authors.name', 'repoOwner'],
   ranking: [
     'typo',
     'words',
