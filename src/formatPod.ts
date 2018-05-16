@@ -8,12 +8,14 @@ export function formatPod({
   specificationData,
   downloads,
 }: ParsedRow): Pod {
-  log.debug('Now transforming', objectID, { specificationData });
+  const spec = specificationData || {};
 
-  const authors = getAuthors(specificationData);
-  const license = getLicense(specificationData);
-  const summary = truncate(specificationData.summary, 500);
-  const source = deHash<{ git: string; tag: string }>(specificationData.source);
+  log.debug('Now transforming', objectID, { spec });
+
+  const authors = getAuthors(spec);
+  const license = getLicense(spec);
+  const summary = truncate(spec.summary, 500);
+  const source = deHash<{ git: string; tag: string }>(spec.source);
   const {
     name,
     version,
@@ -22,7 +24,7 @@ export function formatPod({
     requires_arc,
     swift_version,
     dependencies,
-  } = specificationData;
+  } = spec;
 
   return {
     objectID,
