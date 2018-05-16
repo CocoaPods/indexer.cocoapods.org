@@ -1,7 +1,7 @@
 import { Client } from 'pg';
 import { Pod, SpecificationData } from './types';
 import log from './log';
-import { formatPod } from './formatPod';
+import { formatPod } from './formatPod/index';
 import allPodsQuery from './all-pods.sql';
 
 export const trunk = new Client({
@@ -43,7 +43,7 @@ export async function fetchAll(): Promise<Pod[]> {
     }))
     .map(formatPod)
     .filter(
-      ({ summary }) =>
+      ({ summary }: Pod) =>
         summary && !summary.includes('Unparsable at `trunk` import time.')
     );
 

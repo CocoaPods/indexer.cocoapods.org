@@ -1,4 +1,4 @@
-import { formatPod } from '../formatPod';
+import { formatPod } from '../index';
 import fakePods from './__fixtures__/pods.js';
 
 it('works with some artificial pods', () => {

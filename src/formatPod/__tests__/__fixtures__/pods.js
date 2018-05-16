@@ -9,7 +9,12 @@ module.exports = [
       platforms: { ios: '6.0' },
       summary: 'Easy-to-use UI for iOS apps.',
       license: { type: 'MIT' },
-      ios: { xcconfig: [Object] },
+      // TODO: copy a new version of this which has the full json
+      ios: {
+        xcconfig: {
+          HEADER_SEARCH_PATHS: '$(PODS_ROOT)/../../PBFlatUI/**',
+        },
+      },
       homepage: 'http://github.com/piotrbernad/FlatUI',
       source: {
         git: 'https://github.com/piotrbernad/FlatUI.git',
