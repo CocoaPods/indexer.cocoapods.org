@@ -28,6 +28,69 @@ export interface ParsedRow {
   };
 }
 
+const latest_version_query =
+    //Reference: https://gist.github.com/jugutier/62d1da6fc8edc3d6efe88223b33f5032
+    `
+select
+
+latest_version_per_pod.pod_id,
+all_pods.specification_data
+
+from
+
+				-- Q1
+				(
+				
+					select 
+					latest_version,
+					pod_versions.id as version_id,
+					latest_pods.pod_id
+					
+					from pod_versions
+					join
+					
+					(
+					
+						select max(pod_versions.name) as latest_version , 
+						        pod_id 
+						        
+						from pod_versions
+						group by pod_id
+					
+					) as latest_pods
+					
+					on
+					pod_versions.pod_id = latest_pods.pod_id
+					and
+					pod_versions.name = latest_pods.latest_version
+				
+				
+				) as latest_version_per_pod
+
+left join lateral 
+
+			--Q2
+			(
+			
+						select pod_versions.name as version, 
+							   commits.specification_data,
+							   pod_versions.pod_id,
+							   pod_versions.id as version_id
+						from commits
+						join pod_versions
+						on commits.pod_version_id = pod_versions.id
+						where 
+						pod_versions.pod_id = latest_version_per_pod.pod_id
+						and 
+						version_id = latest_version_per_pod.version_id
+						limit 1
+			
+			)  as all_pods
+
+
+on true
+`
+
 export async function fetchAll(): Promise<Pod[]> {
   await trunk.connect();
   const { rows }: { rows: Row[] } = await trunk.query(`select 
@@ -40,13 +103,11 @@ export async function fetchAll(): Promise<Pod[]> {
     'appsTouched',stats_metrics.app_total) AS downloads
 
   FROM pods,
-    pod_versions,
-    commits,
-    stats_metrics
+    stats_metrics,
+    (${latest_version_query}) as latest_version_query
 
-  WHERE pods.id = pod_versions.pod_id
+  WHERE pods.id = latest_version_query.pod_id
     AND pods.id = stats_metrics.pod_id
-    AND commits.pod_version_id = pod_versions.id
     AND NOT pods.deleted
 
   limit 100000`);
