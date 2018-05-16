@@ -48,7 +48,9 @@ export interface SpecificationData {
    * minimal supported swift version as a string
    */
   swift_version: string;
-  dependencies?: any;
+  dependencies?: {
+    [name: string]: string;
+  };
 }
 
 export interface Pod {
@@ -91,10 +93,15 @@ export interface Pod {
    * minimal supported swift version as a string
    */
   swift_version?: string;
-  dependencies?: any;
+  dependencies?: string[];
   downloads: {
     lastMonth: number;
     total: number;
     appsTouched: number;
+    magnitude: {
+      lastMonth: number;
+      total: number;
+      appsTouched: number;
+    };
   };
 }

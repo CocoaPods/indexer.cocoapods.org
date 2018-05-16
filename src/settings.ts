@@ -12,6 +12,9 @@ export const settings: IndexSettings = {
     'custom',
   ],
   customRanking: [
+    'desc(downloads.magnitude.lastMonth)',
+    'desc(downloads.magnitude.appsTouched)',
+    'desc(downloads.magnitude.total)',
     'desc(downloads.lastMonth)',
     'desc(downloads.appsTouched)',
     'desc(downloads.total)',
@@ -26,6 +29,7 @@ export const settings: IndexSettings = {
   distinct: true,
   // @ts-ignore
   camelCaseAttributes: ['name'],
+  unretrievableAttributes: ['downloads.magnitude'],
 };
 
 export const synonyms: Synonym[] = [];

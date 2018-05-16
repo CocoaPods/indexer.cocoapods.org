@@ -6,7 +6,7 @@ import { ParsedRow } from './database';
 export function formatPod({
   objectID,
   specificationData,
-  downloads,
+  downloads: rawDownloads,
 }: ParsedRow): Pod {
   const spec = specificationData || {};
 
@@ -16,6 +16,8 @@ export function formatPod({
   const license = getLicense(spec);
   const summary = truncate(spec.summary, 500);
   const source = deHash<{ git: string; tag: string }>(spec.source);
+  const downloads = getDownloads(rawDownloads);
+  const dependencies = getDependencies(spec);
   const {
     name,
     version,
@@ -23,7 +25,6 @@ export function formatPod({
     platforms,
     requires_arc,
     swift_version,
-    dependencies,
   } = spec;
 
   return {
@@ -86,4 +87,25 @@ function deHash<T>(hashed: string | T) {
     return undefined;
   }
   return hashed;
+}
+
+const magnitude = (num: number) => num.toString().length;
+
+function getDownloads(downloads: {
+  lastMonth: number;
+  total: number;
+  appsTouched: number;
+}) {
+  return {
+    ...downloads,
+    magnitude: {
+      lastMonth: magnitude(downloads.lastMonth),
+      total: magnitude(downloads.total),
+      appsTouched: magnitude(downloads.appsTouched),
+    },
+  };
+}
+
+function getDependencies({ dependencies = {} }: SpecificationData) {
+  return Object.keys(dependencies);
 }
