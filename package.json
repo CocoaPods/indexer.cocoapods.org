@@ -29,8 +29,10 @@
       "jsx"
     ],
     "transform": {
-      "^.+\\.(js|jsx|ts|tsx)$": "ts-jest"
-    }
+      "^.+\\.(js|jsx|ts|tsx)$": "ts-jest",
+      "^.+\\.sql$": "<rootDir>/test-utils/fileTransformer.js"
+    },
+    "testPathIgnorePatterns": ["__fixtures__", "/node_modules/"]
   },
   "resolutions": {
     "babel-core": "^7.0.0-bridge.0"

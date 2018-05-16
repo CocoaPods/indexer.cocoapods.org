@@ -1,0 +1,198 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`works with some artificial pods: adtickerlabel 1`] = `
+Object {
+  "authors": Array [
+    Object {
+      "avatar": "https://gravatar.com/avatar/f10396c030e84c46e68f53e549584a60",
+      "email": "antondomashnev@gmail.com",
+      "name": "Anton Domashnev",
+    },
+  ],
+  "dependencies": Array [],
+  "downloads": Object {
+    "appsTouched": 120,
+    "lastMonth": 2064,
+    "magnitude": Object {
+      "appsTouched": 3,
+      "lastMonth": 4,
+      "total": 5,
+    },
+    "total": 62002,
+  },
+  "homepage": "https://github.com/Antondomashnev",
+  "license": undefined,
+  "name": "ADTickerLabel",
+  "objectID": "adtickerlabel",
+  "platforms": Object {
+    "ios": null,
+  },
+  "repoOwner": "Antondomashnev",
+  "requires_arc": true,
+  "source": Object {
+    "git": "https://github.com/Antondomashnev/ADTickerLabel.git",
+    "tag": "0.57",
+  },
+  "summary": "ADTickerLabel An objective-c UIView which provide a mechanism to show numbers with rolling effect, like in counter.",
+  "swift_version": undefined,
+  "version": "0.57",
+}
+`;
+
+exports[`works with some artificial pods: klscrollselect 1`] = `
+Object {
+  "authors": Array [
+    Object {
+      "avatar": "https://gravatar.com/avatar/09221d57fe490a6442896c3a41aa99de",
+      "email": "kieran.lafferty@gmail.com",
+      "name": "Kieran Lafferty",
+    },
+  ],
+  "dependencies": Array [],
+  "downloads": Object {
+    "appsTouched": 11,
+    "lastMonth": 0,
+    "magnitude": Object {
+      "appsTouched": 2,
+      "lastMonth": 1,
+      "total": 3,
+    },
+    "total": 154,
+  },
+  "homepage": "https://github.com/KieranLafferty/KLScrollSelect",
+  "license": "Apache License, Version 2.0",
+  "name": "KLScrollSelect",
+  "objectID": "klscrollselect",
+  "platforms": Object {
+    "ios": "5.0",
+  },
+  "repoOwner": "KieranLafferty",
+  "requires_arc": true,
+  "source": Object {
+    "commit": "234be17688dcb02699de1726aca867db82ba7272",
+    "git": "https://github.com/KieranLafferty/KLScrollSelect.git",
+  },
+  "summary": "A control that infinitely scrolls up and down at variable speeds inspired by Expedia 3.0 app.",
+  "swift_version": undefined,
+  "version": "0.0.1",
+}
+`;
+
+exports[`works with some artificial pods: pbflatui 1`] = `
+Object {
+  "authors": Array [
+    Object {
+      "avatar": "https://gravatar.com/avatar/c1169c03ab63173b354d8a52d208c89d",
+      "email": "piotrbernadd@gmail.com",
+      "name": "Piotr Bernad",
+    },
+  ],
+  "dependencies": Array [],
+  "downloads": Object {
+    "appsTouched": 69,
+    "lastMonth": 241,
+    "magnitude": Object {
+      "appsTouched": 2,
+      "lastMonth": 3,
+      "total": 5,
+    },
+    "total": 13149,
+  },
+  "homepage": "http://github.com/piotrbernad/FlatUI",
+  "license": undefined,
+  "name": "PBFlatUI",
+  "objectID": "pbflatui",
+  "platforms": Object {
+    "ios": "6.0",
+  },
+  "repoOwner": "piotrbernad",
+  "requires_arc": true,
+  "source": Object {
+    "git": "https://github.com/piotrbernad/FlatUI.git",
+    "tag": "1.0.0",
+  },
+  "summary": "Easy-to-use UI for iOS apps.",
+  "swift_version": undefined,
+  "version": "1.0.0",
+}
+`;
+
+exports[`works with some artificial pods: socketclient 1`] = `
+Object {
+  "authors": Array [
+    Object {
+      "avatar": "https://gravatar.com/avatar/02ccb656267e4f93b560713688c4d314",
+      "email": "marius@paij.com",
+      "name": "Marius Rackwitz",
+    },
+  ],
+  "dependencies": Array [
+    "SocketRocket",
+  ],
+  "downloads": Object {
+    "appsTouched": 5,
+    "lastMonth": 2,
+    "magnitude": Object {
+      "appsTouched": 1,
+      "lastMonth": 1,
+      "total": 2,
+    },
+    "total": 80,
+  },
+  "homepage": "https://github.com/redpeppix-gmbh-co-kg/SocketClient",
+  "license": "MIT License",
+  "name": "SocketClient",
+  "objectID": "socketclient",
+  "platforms": Object {
+    "ios": "5.0",
+  },
+  "repoOwner": "redpeppix-gmbh-co-kg",
+  "requires_arc": true,
+  "source": Object {
+    "git": "https://github.com/redpeppix-gmbh-co-kg/SocketClient.git",
+    "tag": "0.1.1",
+  },
+  "summary": "Simple, fast & reliable Faye Websocket client. Well documented API build on SocketRocket. Supports messaging ondifferent channels.",
+  "swift_version": undefined,
+  "version": "0.1.1",
+}
+`;
+
+exports[`works with some artificial pods: yajl-objc 1`] = `
+Object {
+  "authors": Array [
+    Object {
+      "avatar": "https://gravatar.com/avatar/5a4a4677b06f5f235d36e716c07835ec",
+      "email": "gabrielh@gmail.com",
+      "name": "Gabriel Handford",
+    },
+  ],
+  "dependencies": Array [
+    "yajl",
+  ],
+  "downloads": Object {
+    "appsTouched": 275,
+    "lastMonth": 4413,
+    "magnitude": Object {
+      "appsTouched": 3,
+      "lastMonth": 4,
+      "total": 6,
+    },
+    "total": 163919,
+  },
+  "homepage": "http://lloyd.github.com/yajl",
+  "license": "MIT",
+  "name": "yajl-objc",
+  "objectID": "yajl-objc",
+  "platforms": undefined,
+  "repoOwner": "a2",
+  "requires_arc": false,
+  "source": Object {
+    "git": "https://github.com/a2/yajl-objc.git",
+    "tag": "v0.2.27",
+  },
+  "summary": "Objective-C bindings for YAJL (Yet Another JSON Library) C library.",
+  "swift_version": undefined,
+  "version": "0.2.27",
+}
+`;
