@@ -11,6 +11,9 @@ export const trunk = new Client({
 
 interface Row {
   objectID: string;
+  /**
+   * JSON string of SpecificationData
+   */
   specificationData: string;
   downloads: {
     lastMonth: number;
