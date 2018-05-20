@@ -37,9 +37,8 @@ async function bootstrap() {
     })
   );
 
-  return await bootstrapIndex.waitTask(
-    await bootstrapIndex.migrateTo(mainIndex)
-  );
+  await bootstrapIndex.waitTask(await bootstrapIndex.migrateTo(mainIndex));
+  log.info('Bootstrap indexing finished');
 }
 
 function watch() {
@@ -62,6 +61,6 @@ async function main() {
 }
 
 main()
-  .then(task => log.info('Initial indexing finished', task))
-  .catch(err => log.error(err, 'Initial indexing has not been completed'))
+  .then(task => log.info('Indexing terminated', task))
+  .catch(err => log.error(err, 'An error happened while indexing'))
   .then(close);

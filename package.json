@@ -32,29 +32,32 @@
       "^.+\\.(js|jsx|ts|tsx)$": "ts-jest",
       "^.+\\.sql$": "<rootDir>/test-utils/fileTransformer.js"
     },
-    "testPathIgnorePatterns": ["__fixtures__", "/node_modules/"]
+    "testPathIgnorePatterns": [
+      "__fixtures__",
+      "/node_modules/"
+    ]
   },
   "resolutions": {
     "babel-core": "^7.0.0-bridge.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.0.0-beta.46",
-    "@babel/core": "^7.0.0-beta.46",
-    "@babel/node": "7.0.0-beta.46",
-    "@babel/preset-env": "7.0.0-beta.46",
-    "@babel/preset-stage-3": "7.0.0-beta.46",
-    "@babel/preset-typescript": "7.0.0-beta.46",
-    "@babel/register": "7.0.0-beta.46",
-    "@types/algoliasearch": "^3.27.1",
+    "@babel/cli": "^7.0.0-beta.47",
+    "@babel/core": "^7.0.0-beta.47",
+    "@babel/node": "7.0.0-beta.47",
+    "@babel/preset-env": "7.0.0-beta.47",
+    "@babel/preset-stage-3": "7.0.0-beta.47",
+    "@babel/preset-typescript": "7.0.0-beta.47",
+    "@babel/register": "7.0.0-beta.47",
+    "@types/algoliasearch": "^3.27.3",
     "@types/bunyan": "^1.8.4",
     "@types/dotenv": "^4.0.3",
     "@types/gravatar-url": "^2.0.0",
     "@types/jest": "^22.2.3",
-    "@types/lodash": "^4.14.108",
-    "@types/pg": "^7.4.8",
+    "@types/lodash": "^4.14.109",
+    "@types/pg": "^7.4.9",
     "babel-plugin-inline-import": "^2.0.6",
     "babel-plugin-module-resolver": "^3.0.0",
-    "jest": "22.4.3",
+    "jest": "22.4.4",
     "ts-jest": "^22.4.6",
     "tsc": "^1.20150623.0",
     "tslint": "^5.8.0",

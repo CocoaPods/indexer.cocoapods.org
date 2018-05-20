@@ -89,7 +89,6 @@ export class Index {
     const destination = destinationIndex.indexName;
 
     log.info('moving', source, 'to', destination);
-    // @ts-ignore https://github.com/DefinitelyTyped/DefinitelyTyped/pull/25763
     return this._client.copyIndex(source, destination);
   }
 

@@ -33,6 +33,7 @@ export interface ParsedRow {
 }
 
 export async function fetchAll(): Promise<Pod[]> {
+  log.info('Commencing query for all pods');
   await trunk.connect();
   const { rows }: { rows: Row[] } = await trunk.query(allPodsQuery);
 

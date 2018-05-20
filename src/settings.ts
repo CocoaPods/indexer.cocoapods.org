@@ -27,7 +27,6 @@ export const settings: IndexSettings = {
   ],
   attributeForDistinct: 'name',
   distinct: true,
-  // @ts-ignore
   camelCaseAttributes: ['name'],
   unretrievableAttributes: ['downloads.magnitude'],
 };
