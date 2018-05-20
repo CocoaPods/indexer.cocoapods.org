@@ -4,7 +4,9 @@ A service that handles indexing Pods into Algolia for search.
 
 ## Status
 
-In initial development
+In production use at [cocoapods.org](https://cocoapods.org).
+
+Note that webhooks aren't implemented yet, and only daily a reindex is done.
 
 ## Role
 

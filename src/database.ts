@@ -37,7 +37,7 @@ export async function fetchAll(): Promise<Pod[]> {
   await trunk.connect();
   const { rows }: { rows: Row[] } = await trunk.query(allPodsQuery);
 
-  log.info(`found ${rows.length} pods`);
+  log.info(`Found ${rows.length} pods`);
 
   const pods: Pod[] = rows
     .map(({ objectID, specificationData, downloads }: Row) => ({

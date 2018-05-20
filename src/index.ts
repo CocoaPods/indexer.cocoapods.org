@@ -4,6 +4,7 @@ import log from './log.js';
 import { Index } from './algolia';
 import { fetchAll } from './database';
 import { settings, synonyms, rules } from './settings';
+import ms from 'ms';
 
 log.info(
   'Welcome! We will now start indexing to',
@@ -13,16 +14,12 @@ log.info(
 const mainIndex = new Index(process.env.ALGOLIA_INDEX_NAME);
 const bootstrapIndex = new Index(`${process.env.ALGOLIA_INDEX_NAME}-bootstrap`);
 
-export const test = {
-  isMySetupWorking: true,
-};
-
 function close() {
-  log.info("That's all for now. Thanks!");
+  log.info('So Long, and Thanks for All the Fish!');
   process.exit(0);
 }
 
-async function bootstrap() {
+export async function bootstrap() {
   await bootstrapIndex.waitTask(await bootstrapIndex.destroy());
 
   await bootstrapIndex.waitTask(
@@ -41,9 +38,15 @@ async function bootstrap() {
   log.info('Bootstrap indexing finished');
 }
 
-function watch() {
-  // TODO: listen to web hooks and update things in the index
-  return undefined;
+const sleep = (time: number) =>
+  new Promise(resolve => setTimeout(resolve, time));
+
+async function watch() {
+  // TODO: listen to webhooks and update things in the index
+  log.info(
+    'Webhooks are not yet implemented, so instead we will now wait for 1 day'
+  );
+  await sleep(ms('1 day'));
 }
 
 function shouldRedoBootstrap() {
@@ -61,6 +64,6 @@ async function main() {
 }
 
 main()
-  .then(task => log.info('Indexing terminated', task))
+  .then(() => log.info('Indexing terminated'))
   .catch(err => log.error(err, 'An error happened while indexing'))
   .then(close);

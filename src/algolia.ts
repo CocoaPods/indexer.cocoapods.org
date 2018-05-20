@@ -69,7 +69,7 @@ export class Index {
     synonyms: algoliasearch.Synonym[];
     rules: algoliasearch.Rule[];
   }) {
-    log.info('setting settings on', this.indexName);
+    log.info('Setting settings on', this.indexName);
     await this._index.setSettings(settings);
     await this._index.batchSynonyms(synonyms, {
       replaceExistingSynonyms: true,
@@ -88,7 +88,7 @@ export class Index {
     const source = this.indexName;
     const destination = destinationIndex.indexName;
 
-    log.info('moving', source, 'to', destination);
+    log.info('Moving', source, 'to', destination);
     return this._client.copyIndex(source, destination);
   }
 
@@ -101,7 +101,7 @@ export class Index {
    * clear and delete this index
    */
   async destroy() {
-    log.info('removing the index', this.indexName);
+    log.info('Removing the index', this.indexName);
     return this._client.deleteIndex(this.indexName);
   }
 }
