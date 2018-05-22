@@ -26,7 +26,6 @@ export const settings: IndexSettings = {
     'searchable(authors.name)',
   ],
   attributeForDistinct: 'name',
-  distinct: true,
   camelCaseAttributes: ['name'],
   unretrievableAttributes: ['downloads.magnitude'],
 };
