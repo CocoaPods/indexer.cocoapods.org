@@ -1,7 +1,13 @@
 import { IndexSettings, Synonym, Rule } from 'algoliasearch';
 
 export const settings: IndexSettings = {
-  searchableAttributes: ['name', 'summary', 'authors.name', 'repoOwner'],
+  searchableAttributes: [
+    'name',
+    '_searchInternal.alternativeNames',
+    'summary',
+    'authors.name',
+    'repoOwner',
+  ],
   ranking: [
     'typo',
     'words',
@@ -12,9 +18,9 @@ export const settings: IndexSettings = {
     'custom',
   ],
   customRanking: [
-    'desc(downloads.magnitude.lastMonth)',
-    'desc(downloads.magnitude.appsTouched)',
-    'desc(downloads.magnitude.total)',
+    'desc(_searchInternal.downloadsMagnitude.lastMonth)',
+    'desc(_searchInternal.downloadsMagnitude.appsTouched)',
+    'desc(_searchInternal.downloadsMagnitude.total)',
     'desc(downloads.lastMonth)',
     'desc(downloads.appsTouched)',
     'desc(downloads.total)',
@@ -27,7 +33,8 @@ export const settings: IndexSettings = {
   ],
   attributeForDistinct: 'name',
   camelCaseAttributes: ['name'],
-  unretrievableAttributes: ['downloads.magnitude'],
+  unretrievableAttributes: ['_searchInternal'],
+  separatorsToIndex: '-_',
 };
 
 export const synonyms: Synonym[] = [];

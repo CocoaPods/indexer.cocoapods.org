@@ -99,7 +99,10 @@ export interface Pod {
     lastMonth: number;
     total: number;
     appsTouched: number;
-    magnitude: {
+  };
+  _searchInternal: {
+    alternativeNames: string[];
+    downloadsMagnitude: {
       lastMonth: number;
       total: number;
       appsTouched: number;

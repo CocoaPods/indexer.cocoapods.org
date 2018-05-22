@@ -2,6 +2,17 @@
 
 exports[`works with some artificial pods: adtickerlabel 1`] = `
 Object {
+  "_searchInternal": Object {
+    "alternativeNames": Array [
+      "ADTickerLabel",
+      "adtickerlabel",
+    ],
+    "downloadsMagnitude": Object {
+      "appsTouched": 3,
+      "lastMonth": 4,
+      "total": 5,
+    },
+  },
   "authors": Array [
     Object {
       "avatar": "https://gravatar.com/avatar/f10396c030e84c46e68f53e549584a60",
@@ -13,11 +24,6 @@ Object {
   "downloads": Object {
     "appsTouched": 120,
     "lastMonth": 2064,
-    "magnitude": Object {
-      "appsTouched": 3,
-      "lastMonth": 4,
-      "total": 5,
-    },
     "total": 62002,
   },
   "homepage": "https://github.com/Antondomashnev",
@@ -41,6 +47,17 @@ Object {
 
 exports[`works with some artificial pods: klscrollselect 1`] = `
 Object {
+  "_searchInternal": Object {
+    "alternativeNames": Array [
+      "KLScrollSelect",
+      "klscrollselect",
+    ],
+    "downloadsMagnitude": Object {
+      "appsTouched": 2,
+      "lastMonth": 1,
+      "total": 3,
+    },
+  },
   "authors": Array [
     Object {
       "avatar": "https://gravatar.com/avatar/09221d57fe490a6442896c3a41aa99de",
@@ -52,11 +69,6 @@ Object {
   "downloads": Object {
     "appsTouched": 11,
     "lastMonth": 0,
-    "magnitude": Object {
-      "appsTouched": 2,
-      "lastMonth": 1,
-      "total": 3,
-    },
     "total": 154,
   },
   "homepage": "https://github.com/KieranLafferty/KLScrollSelect",
@@ -80,6 +92,17 @@ Object {
 
 exports[`works with some artificial pods: pbflatui 1`] = `
 Object {
+  "_searchInternal": Object {
+    "alternativeNames": Array [
+      "PBFlatUI",
+      "pbflatui",
+    ],
+    "downloadsMagnitude": Object {
+      "appsTouched": 2,
+      "lastMonth": 3,
+      "total": 5,
+    },
+  },
   "authors": Array [
     Object {
       "avatar": "https://gravatar.com/avatar/c1169c03ab63173b354d8a52d208c89d",
@@ -91,11 +114,6 @@ Object {
   "downloads": Object {
     "appsTouched": 69,
     "lastMonth": 241,
-    "magnitude": Object {
-      "appsTouched": 2,
-      "lastMonth": 3,
-      "total": 5,
-    },
     "total": 13149,
   },
   "homepage": "http://github.com/piotrbernad/FlatUI",
@@ -119,6 +137,17 @@ Object {
 
 exports[`works with some artificial pods: socketclient 1`] = `
 Object {
+  "_searchInternal": Object {
+    "alternativeNames": Array [
+      "SocketClient",
+      "socketclient",
+    ],
+    "downloadsMagnitude": Object {
+      "appsTouched": 1,
+      "lastMonth": 1,
+      "total": 2,
+    },
+  },
   "authors": Array [
     Object {
       "avatar": "https://gravatar.com/avatar/02ccb656267e4f93b560713688c4d314",
@@ -132,11 +161,6 @@ Object {
   "downloads": Object {
     "appsTouched": 5,
     "lastMonth": 2,
-    "magnitude": Object {
-      "appsTouched": 1,
-      "lastMonth": 1,
-      "total": 2,
-    },
     "total": 80,
   },
   "homepage": "https://github.com/redpeppix-gmbh-co-kg/SocketClient",
@@ -160,6 +184,16 @@ Object {
 
 exports[`works with some artificial pods: yajl-objc 1`] = `
 Object {
+  "_searchInternal": Object {
+    "alternativeNames": Array [
+      "yajl-objc",
+    ],
+    "downloadsMagnitude": Object {
+      "appsTouched": 3,
+      "lastMonth": 4,
+      "total": 6,
+    },
+  },
   "authors": Array [
     Object {
       "avatar": "https://gravatar.com/avatar/5a4a4677b06f5f235d36e716c07835ec",
@@ -173,11 +207,6 @@ Object {
   "downloads": Object {
     "appsTouched": 275,
     "lastMonth": 4413,
-    "magnitude": Object {
-      "appsTouched": 3,
-      "lastMonth": 4,
-      "total": 6,
-    },
     "total": 163919,
   },
   "homepage": "http://lloyd.github.com/yajl",

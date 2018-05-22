@@ -7,7 +7,7 @@ import { getAuthors } from './getAuthors';
 export function formatPod({
   objectID,
   specificationData,
-  downloads: rawDownloads,
+  downloads,
 }: ParsedRow): Pod {
   const spec = specificationData || {};
 
@@ -17,9 +17,10 @@ export function formatPod({
   const license = getLicense(spec);
   const summary = truncate(spec.summary, 500);
   const source = deHash<{ git: string; tag: string }>(spec.source);
-  const downloads = getDownloads(rawDownloads);
   const dependencies = getDependencies(spec);
   const repoOwner = getRepoOwner(spec);
+  const downloadsMagnitude = getDownloadsMagnitude(downloads);
+  const alternativeNames = getAlternativeNames(spec, objectID);
   const {
     name,
     version,
@@ -44,7 +45,19 @@ export function formatPod({
     dependencies,
     downloads,
     repoOwner,
+    _searchInternal: {
+      alternativeNames,
+      downloadsMagnitude,
+    },
   };
+}
+
+function getAlternativeNames({ name }: SpecificationData, objectID: string) {
+  const specialChars = /-_\//g;
+  const concatenatedName = name.replace(specialChars, '');
+  const splitName = name.replace(specialChars, ' ');
+  const names = new Set([concatenatedName, splitName, objectID]);
+  return Array.from(names);
 }
 
 function truncate(text: string | undefined, length: number) {
@@ -63,18 +76,15 @@ function deHash<T>(hashed: string | T) {
 
 const magnitude = (num: number) => num.toString().length;
 
-function getDownloads(downloads: {
+function getDownloadsMagnitude(downloads: {
   lastMonth: number;
   total: number;
   appsTouched: number;
 }) {
   return {
-    ...downloads,
-    magnitude: {
-      lastMonth: magnitude(downloads.lastMonth),
-      total: magnitude(downloads.total),
-      appsTouched: magnitude(downloads.appsTouched),
-    },
+    lastMonth: magnitude(downloads.lastMonth),
+    total: magnitude(downloads.total),
+    appsTouched: magnitude(downloads.appsTouched),
   };
 }
 
