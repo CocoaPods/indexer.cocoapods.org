@@ -1,14 +1,33 @@
 import { config } from 'dotenv';
 config();
 import log from './log.js';
-import { Index } from './algolia';
+import { Index } from './algolia/index';
 import { fetchAll } from './database';
 import { settings, synonyms, rules } from './settings';
 import ms from 'ms';
 
+interface IndexState {
+  bootstrapLastFinished: number;
+  bootstrapDidFinish: boolean;
+}
+const defaultState: IndexState = {
+  bootstrapLastFinished: 0,
+  bootstrapDidFinish: true,
+};
+
+const mainIndex = new Index<IndexState>({
+  indexName: process.env.ALGOLIA_INDEX_NAME,
+  defaultState,
+});
+const bootstrapIndex = new Index<IndexState>({
+  indexName: `${process.env.ALGOLIA_INDEX_NAME}-bootstrap`,
+});
+
 log.info(
   'Welcome! We will now start indexing to',
-  process.env.ALGOLIA_INDEX_NAME
+  mainIndex.indexName,
+  'and',
+  bootstrapIndex.indexName
 );
 
 const mainIndex = new Index(process.env.ALGOLIA_INDEX_NAME);

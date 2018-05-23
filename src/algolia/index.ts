@@ -1,14 +1,22 @@
 import algoliasearch from 'algoliasearch';
 import chunk from 'lodash/chunk';
-import { Pod } from './types';
-import log from './log';
+import { Pod } from '../types';
+import log from '../log';
+import { StateManager } from './StateManager';
 
-export class Index {
+export class Index<UserData extends object> {
   private _client: algoliasearch.Client;
   private _index: algoliasearch.Index;
-  private indexName: string;
+  indexName: string;
+  state?: StateManager<UserData>;
 
-  constructor(indexName: string | undefined = process.env.ALGOLIA_INDEX_NAME) {
+  constructor({
+    indexName = process.env.ALGOLIA_INDEX_NAME,
+    defaultState,
+  }: {
+    indexName: string | undefined;
+    defaultState?: UserData;
+  }) {
     if (!process.env.ALGOLIA_APP_ID) {
       throw new Error(
         'npm-search: Please provide the `ALGOLIA_APP_ID` env variable and restart'
@@ -32,6 +40,23 @@ export class Index {
 
     this._index = this._client.initIndex(indexName);
     this.indexName = indexName;
+    if (defaultState) {
+      this.state = new StateManager<UserData>({
+        defaultState,
+
+        getUserData: async (): Promise<UserData | undefined> =>
+          this._index
+            .getSettings()
+            // @ts-ignore we can't document this in the typings since it's internal!
+            .then(({ userData }: { userData: UserData }) => userData),
+
+        setUserData: async (userData: UserData): Promise<algoliasearch.Task> =>
+          this._index.setSettings({
+            // @ts-ignore we can't document this in the typings since it's internal!
+            userData,
+          }),
+      });
+    }
   }
 
   /**
@@ -84,7 +109,7 @@ export class Index {
    *
    * Note that this index will still exist, but the destination will be overwritten
    */
-  async migrateTo(destinationIndex: Index) {
+  async migrateTo(destinationIndex: Index<UserData>) {
     const source = this.indexName;
     const destination = destinationIndex.indexName;
 
