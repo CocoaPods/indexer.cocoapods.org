@@ -7,7 +7,7 @@ type SetUserData<State> = (userData: State) => Promise<Task>;
 export class StateManager<State extends object> {
   private getUserData: GetUserData<State>;
   private setUserData: SetUserData<State>;
-  private currentState: State;
+  private currentState?: State;
   private defaultState: State;
 
   constructor({
@@ -22,7 +22,7 @@ export class StateManager<State extends object> {
     this.getUserData = getUserData;
     this.setUserData = setUserData;
     this.defaultState = defaultState;
-    this.currentState = defaultState;
+    this.currentState = undefined;
   }
 
   /**

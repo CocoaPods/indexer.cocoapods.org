@@ -30,8 +30,7 @@ log.info(
   bootstrapIndex.indexName
 );
 
-const mainIndex = new Index(process.env.ALGOLIA_INDEX_NAME);
-const bootstrapIndex = new Index(`${process.env.ALGOLIA_INDEX_NAME}-bootstrap`);
+const bootstrapFrequency = ms('1 day');
 
 function close() {
   log.info('So Long, and Thanks for All the Fish!');
@@ -39,6 +38,12 @@ function close() {
 }
 
 export async function bootstrap() {
+  if (mainIndex.state === undefined) {
+    throw new Error(
+      `Main index ${mainIndex.indexName} did not have index state`
+    );
+  }
+  await mainIndex.state.save({ bootstrapDidFinish: false });
   await bootstrapIndex.waitTask(await bootstrapIndex.destroy());
 
   await bootstrapIndex.waitTask(
@@ -54,6 +59,11 @@ export async function bootstrap() {
   );
 
   await bootstrapIndex.waitTask(await bootstrapIndex.migrateTo(mainIndex));
+  await mainIndex.state.save({
+    bootstrapDidFinish: true,
+    bootstrapLastFinished: new Date().getTime(),
+  });
+
   log.info('Bootstrap indexing finished');
 }
 
@@ -63,19 +73,48 @@ const sleep = (time: number) =>
 async function watch() {
   // TODO: listen to webhooks and update things in the index
   log.info(
-    'Webhooks are not yet implemented, so instead we will now wait for 1 day'
+    `Webhooks are not yet implemented, so instead we will now wait for`,
+    ms(bootstrapFrequency, { long: true }),
+    `, then we will crash and let the autorestarting take over`
   );
-  await sleep(ms('1 day'));
+  await sleep(bootstrapFrequency);
 }
 
-function shouldRedoBootstrap() {
-  // TODO: check a stored time for last complete bootstrap vs time now
-  // redo if over a certain threshold
-  return true;
+async function shouldRedoBootstrap() {
+  if (mainIndex.state === undefined) {
+    throw new Error(
+      `Main index ${mainIndex.indexName} did not have index state`
+    );
+  }
+  const {
+    bootstrapDidFinish,
+    bootstrapLastFinished,
+  } = await mainIndex.state.get();
+  const currentTime = new Date().getTime();
+  const timeDiff = currentTime - bootstrapLastFinished;
+  const shouldRedo = bootstrapDidFinish && timeDiff > bootstrapFrequency;
+
+  log.info(`Should we redo indexing ? ${shouldRedo ? 'yes' : 'no'}`, {
+    bootstrapDidFinish,
+    currentTime,
+    bootstrapLastFinished,
+    timeDiff,
+    bootstrapFrequency,
+    shouldRedo,
+  });
+
+  return shouldRedo;
 }
 
 async function main() {
-  if (shouldRedoBootstrap()) {
+  if (mainIndex.state === undefined) {
+    throw new Error(
+      `Main index ${mainIndex.indexName} did not have index state`
+    );
+  }
+  await mainIndex.state.check();
+
+  if (await shouldRedoBootstrap()) {
     await bootstrap();
   }
 
