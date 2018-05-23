@@ -1,4 +1,3 @@
-import { Index } from './index';
 import { Task } from 'algoliasearch';
 
 type GetUserData<State> = () => Promise<State | undefined>;

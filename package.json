@@ -10,7 +10,7 @@
     "coverage": "jest --coverage",
     "postinstall": "yarn build",
     "prepublishOnly": "yarn build",
-    "test": "jest",
+    "test": "jest && yarn typecheck && yarn build",
     "test:watch": "jest -o --watch",
     "typecheck": "tsc"
   },
