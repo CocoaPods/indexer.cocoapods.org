@@ -3,13 +3,47 @@ import log from '../log';
 import { Pod, SpecificationData } from '../types';
 import { getLicense } from './getLicense';
 import { getAuthors } from './getAuthors';
+import isEmpty from 'lodash/isEmpty';
 
 export function formatPod({
   objectID,
   specificationData,
   downloads,
 }: ParsedRow): Pod {
-  const spec = specificationData || {};
+  if (isEmpty(specificationData)) {
+    log.info(
+      `Skipping specification data processing for ${objectID}, since it is`,
+      specificationData
+    );
+
+    return {
+      objectID,
+      name: objectID,
+      version: '0.0.0',
+      downloads,
+      summary: 'Unparsable at `trunk` import time.',
+      _searchInternal: {
+        alternativeNames: [objectID],
+        downloadsMagnitude: getDownloadsMagnitude(downloads),
+      },
+    };
+  }
+
+  const spec = specificationData as SpecificationData;
+
+  if (spec.deprecated === true) {
+    return {
+      objectID,
+      name: objectID,
+      version: '0.0.0',
+      downloads,
+      summary: 'This pod is deprecated',
+      _searchInternal: {
+        alternativeNames: [objectID],
+        downloadsMagnitude: getDownloadsMagnitude(downloads),
+      },
+    };
+  }
 
   log.debug('Now transforming', objectID, { spec });
 
@@ -54,8 +88,8 @@ export function formatPod({
 
 function getAlternativeNames({ name }: SpecificationData, objectID: string) {
   const specialChars = /-_\//g;
-  const concatenatedName = name.replace(specialChars, '');
-  const splitName = name.replace(specialChars, ' ');
+  const concatenatedName = name ? name.replace(specialChars, '') : '';
+  const splitName = name ? name.replace(specialChars, ' ') : '';
   const names = new Set([concatenatedName, splitName, objectID]);
   return Array.from(names);
 }

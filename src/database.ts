@@ -24,7 +24,7 @@ interface Row {
 
 export interface ParsedRow {
   objectID: string;
-  specificationData: SpecificationData;
+  specificationData?: SpecificationData | {};
   downloads: {
     lastMonth: number;
     total: number;
@@ -45,11 +45,7 @@ export async function fetchAll(): Promise<Pod[]> {
       specificationData: JSON.parse(specificationData),
       downloads,
     }))
-    .map(formatPod)
-    .filter(
-      ({ summary }: Pod) =>
-        summary && !summary.includes('Unparsable at `trunk` import time.')
-    );
+    .map(formatPod);
 
   log.info(`Will now index ${pods.length} pods`);
 

@@ -1,3 +1,12 @@
+type RawAuthor =
+  | {
+      [name: string]: string;
+    }
+  | string;
+// { name: string, email ?: string }
+
+type RawAuthors = RawAuthor | RawAuthor[];
+
 export interface SpecificationData {
   name: string;
   /**
@@ -18,11 +27,7 @@ export interface SpecificationData {
         text: string;
       }
     | string; // can be just the type or a ruby hash too
-  authors?:
-    | {
-        [name: string]: string;
-      }
-    | string; // can also be a ruby hash
+  authors?: RawAuthors;
   /**
    * supported version of each platform
    */
@@ -51,6 +56,7 @@ export interface SpecificationData {
   dependencies?: {
     [name: string]: string;
   };
+  deprecated: boolean;
 }
 
 export interface Pod {
