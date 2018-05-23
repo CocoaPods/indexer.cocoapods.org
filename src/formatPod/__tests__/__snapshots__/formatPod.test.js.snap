@@ -45,6 +45,53 @@ Object {
 }
 `;
 
+exports[`works with some artificial pods: algoliasearch-client-swift 1`] = `
+Object {
+  "_searchInternal": Object {
+    "alternativeNames": Array [
+      "AlgoliaSearchClientSwift",
+      "AlgoliaSearch Client Swift",
+      "algoliasearch-client-swift",
+    ],
+    "downloadsMagnitude": Object {
+      "appsTouched": 4,
+      "lastMonth": 4,
+      "total": 6,
+    },
+  },
+  "authors": Array [
+    Object {
+      "avatar": "https://gravatar.com/avatar/ccc1c40436d136422e916c5702612e09",
+      "email": "contact@algolia.com",
+      "name": "Algolia",
+    },
+  ],
+  "dependencies": Array [],
+  "downloads": Object {
+    "appsTouched": 1680,
+    "lastMonth": 9591,
+    "total": 262653,
+  },
+  "homepage": "https://github.com/algolia/algoliasearch-client-swift",
+  "license": "MIT",
+  "name": "AlgoliaSearch-Client-Swift",
+  "objectID": "algoliasearch-client-swift",
+  "platforms": Object {
+    "ios": "8.0",
+    "osx": "10.9",
+  },
+  "repoOwner": "algolia",
+  "requires_arc": true,
+  "source": Object {
+    "git": "https://github.com/algolia/algoliasearch-client-swift.git",
+    "tag": "1.1.0",
+  },
+  "summary": "Algolia Search API Client for iOS & OS X written in Swift.",
+  "swift_version": undefined,
+  "version": "1.1.0",
+}
+`;
+
 exports[`works with some artificial pods: klscrollselect 1`] = `
 Object {
   "_searchInternal": Object {
@@ -186,6 +233,8 @@ exports[`works with some artificial pods: yajl-objc 1`] = `
 Object {
   "_searchInternal": Object {
     "alternativeNames": Array [
+      "yajlobjc",
+      "yajl objc",
       "yajl-objc",
     ],
     "downloadsMagnitude": Object {

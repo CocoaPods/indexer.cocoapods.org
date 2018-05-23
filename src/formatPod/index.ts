@@ -3,6 +3,7 @@ import log from '../log';
 import { Pod, SpecificationData } from '../types';
 import { getLicense } from './getLicense';
 import { getAuthors } from './getAuthors';
+import { getAlternativeNames } from './getAlternativeNames';
 import isEmpty from 'lodash/isEmpty';
 
 export function formatPod({
@@ -84,14 +85,6 @@ export function formatPod({
       downloadsMagnitude,
     },
   };
-}
-
-function getAlternativeNames({ name }: SpecificationData, objectID: string) {
-  const specialChars = /-_\//g;
-  const concatenatedName = name ? name.replace(specialChars, '') : '';
-  const splitName = name ? name.replace(specialChars, ' ') : '';
-  const names = new Set([concatenatedName, splitName, objectID]);
-  return Array.from(names);
 }
 
 function truncate(text: string | undefined, length: number) {

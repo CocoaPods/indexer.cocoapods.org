@@ -108,4 +108,29 @@ module.exports = [
     },
     downloads: { lastMonth: 4413, total: 163919, appsTouched: 275 },
   },
+
+  {
+    objectID: 'algoliasearch-client-swift',
+    specificationData: {
+      name: 'AlgoliaSearch-Client-Swift',
+      version: '1.1.0',
+      license: 'MIT',
+      summary: 'Algolia Search API Client for iOS & OS X written in Swift.',
+      homepage: 'https://github.com/algolia/algoliasearch-client-swift',
+      authors: {
+        Algolia: 'contact@algolia.com',
+      },
+      source: {
+        git: 'https://github.com/algolia/algoliasearch-client-swift.git',
+        tag: '1.1.0',
+      },
+      platforms: {
+        ios: '8.0',
+        osx: '10.9',
+      },
+      source_files: 'Source/*.swift',
+      requires_arc: true,
+    },
+    downloads: { lastMonth: 9591, total: 262653, appsTouched: 1680 },
+  },
 ];
