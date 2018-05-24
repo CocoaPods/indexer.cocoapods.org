@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "build": "yarn clean:build && babel src --ignore src/**/__tests__ --out-dir dist --extensions '.ts,.js'",
-    "dev": "babel-node --extensions '.ts,.tsx' src/index.ts | bunyan",
-    "start": "node dist/index.js | bunyan",
+    "dev": "babel-node --extensions '.ts,.tsx' src/index.ts | bunyan --color",
+    "start": "node dist/index.js | bunyan --color",
     "clean:build": "rm -rf dist",
     "coverage": "jest --coverage",
     "postinstall": "yarn build",
