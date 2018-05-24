@@ -19,3 +19,13 @@ it('Deals with dashes', () => {
     'algoliasearch-client-swift',
   ]);
 });
+
+it('Deals with underscores', () => {
+  const spec = { name: 'AlgoliaSearch_Client_Swift' } as SpecificationData;
+  const objectID = 'algoliasearch_client_swift';
+  expect(getAlternativeNames(spec, objectID)).toEqual([
+    'AlgoliaSearchClientSwift',
+    'AlgoliaSearch Client Swift',
+    'algoliasearch_client_swift',
+  ]);
+});
