@@ -56,14 +56,7 @@ export function formatPod({
   const repoOwner = getRepoOwner(spec);
   const downloadsMagnitude = getDownloadsMagnitude(downloads);
   const alternativeNames = getAlternativeNames(spec, objectID);
-  const {
-    name,
-    version,
-    homepage,
-    platforms,
-    requires_arc,
-    swift_version,
-  } = spec;
+  const { name, version, homepage, platforms, swift_version } = spec;
 
   return {
     objectID,
@@ -75,7 +68,6 @@ export function formatPod({
     authors,
     platforms,
     source,
-    requires_arc,
     swift_version,
     dependencies,
     downloads,

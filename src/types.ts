@@ -48,7 +48,7 @@ export interface SpecificationData {
    * A path the the source files
    */
   source_files: string;
-  requires_arc: boolean;
+  requires_arc: any;
   /**
    * minimal supported swift version as a string
    */
@@ -95,7 +95,6 @@ export interface Pod {
      */
     tag: string;
   };
-  requires_arc?: boolean;
   /**
    * minimal supported swift version as a string
    */

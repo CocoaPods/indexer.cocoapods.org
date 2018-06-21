@@ -34,7 +34,6 @@ Object {
     "ios": null,
   },
   "repoOwner": "Antondomashnev",
-  "requires_arc": true,
   "source": Object {
     "git": "https://github.com/Antondomashnev/ADTickerLabel.git",
     "tag": "0.57",
@@ -81,7 +80,6 @@ Object {
     "osx": "10.9",
   },
   "repoOwner": "algolia",
-  "requires_arc": true,
   "source": Object {
     "git": "https://github.com/algolia/algoliasearch-client-swift.git",
     "tag": "1.1.0",
@@ -126,7 +124,6 @@ Object {
     "ios": "5.0",
   },
   "repoOwner": "KieranLafferty",
-  "requires_arc": true,
   "source": Object {
     "commit": "234be17688dcb02699de1726aca867db82ba7272",
     "git": "https://github.com/KieranLafferty/KLScrollSelect.git",
@@ -171,7 +168,6 @@ Object {
     "ios": "6.0",
   },
   "repoOwner": "piotrbernad",
-  "requires_arc": true,
   "source": Object {
     "git": "https://github.com/piotrbernad/FlatUI.git",
     "tag": "1.0.0",
@@ -218,7 +214,6 @@ Object {
     "ios": "5.0",
   },
   "repoOwner": "redpeppix-gmbh-co-kg",
-  "requires_arc": true,
   "source": Object {
     "git": "https://github.com/redpeppix-gmbh-co-kg/SocketClient.git",
     "tag": "0.1.1",
@@ -264,7 +259,6 @@ Object {
   "objectID": "yajl-objc",
   "platforms": undefined,
   "repoOwner": "a2",
-  "requires_arc": false,
   "source": Object {
     "git": "https://github.com/a2/yajl-objc.git",
     "tag": "v0.2.27",

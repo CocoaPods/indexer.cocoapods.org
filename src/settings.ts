@@ -28,7 +28,6 @@ export const settings: IndexSettings = {
   attributesForFaceting: [
     'platforms',
     'license.type',
-    'requires_arc',
     'searchable(authors.name)',
   ],
   attributeForDistinct: 'name',
