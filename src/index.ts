@@ -103,7 +103,7 @@ async function shouldRedoBootstrap() {
     shouldRedo,
   });
 
-  return true;
+  return shouldRedo;
 }
 
 async function main() {
