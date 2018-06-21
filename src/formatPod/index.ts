@@ -101,7 +101,7 @@ function deHash<T>(hashed: string | T) {
   return hashed;
 }
 
-const magnitude = (num: number) => num.toString().length;
+const magnitude = (num: number | null) => (num || 0).toString().length;
 
 function getDownloadsMagnitude(downloads: {
   lastMonth: number;
