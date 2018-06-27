@@ -12,7 +12,7 @@ export function formatPod({
   downloads,
 }: ParsedRow): Pod {
   if (isEmpty(specificationData)) {
-    log.info(
+    log.debug(
       `Skipping specification data processing for ${objectID}, since it is`,
       specificationData
     );
