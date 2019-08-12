@@ -127,6 +127,9 @@ function getRepoOwner({ source }: SpecificationData) {
  * This function is like getGitHubRepoInfo (above), but support github, gitlab and bitbucket.
  */
 function getRepositoryInfoFromHttpUrl(repository: string) {
+  if (typeof repository !== 'string') {
+    return {};
+  }
   const result = repository.match(
     /^https?:\/\/(?:www\.)?((?:github|gitlab|bitbucket)).((?:com|org))\/([^/]+)\/([^/]+)(\/.+)?$/
   );
