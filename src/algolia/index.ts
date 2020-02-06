@@ -117,7 +117,7 @@ export class Index<UserData extends object> {
     return this._client.copyIndex(source, destination);
   }
 
-  async waitTask({ taskID }: algoliasearch.Task) {
+  async waitTask({ taskID }: Pick<algoliasearch.Task, 'taskID'>) {
     log.info(`Waiting for Algolia task ${taskID} on ${this.indexName}`);
     return this._index.waitTask(taskID);
   }

@@ -5,6 +5,7 @@ import { Index } from './algolia/index';
 import { fetchAll } from './database';
 import { settings, synonyms, rules } from './settings';
 import ms from 'ms';
+import { Task } from 'algoliasearch';
 
 interface IndexState {
   bootstrapLastFinished: number;
@@ -46,9 +47,17 @@ export async function bootstrap() {
   await mainIndex.state.save({ bootstrapDidFinish: false });
   await bootstrapIndex.waitTask(await bootstrapIndex.destroy());
 
-  await bootstrapIndex.waitTask(
-    await bootstrapIndex.savePods(await fetchAll())
-  );
+  const taskPromises: Promise<Task>[] = [];
+
+  await fetchAll(pods => {
+    taskPromises.push(bootstrapIndex.savePods(pods));
+  });
+
+  const tasks = await Promise.all(taskPromises);
+  const taskIds = tasks.map(task => task.taskID);
+  const latestTask = Math.max(...taskIds);
+
+  await bootstrapIndex.waitTask({ taskID: latestTask });
 
   await bootstrapIndex.waitTask(
     await bootstrapIndex.setAllSettings({

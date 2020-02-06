@@ -1,4 +1,5 @@
 import { Client } from 'pg';
+import Cursor from 'pg-cursor';
 import { Pod, SpecificationData } from './types';
 import log from './log';
 import { formatPod } from './formatPod/index';
@@ -58,22 +59,44 @@ export interface ParsedRow {
   };
 }
 
-export async function fetchAll(): Promise<Pod[]> {
+export async function fetchAll(onBatch: (pods: Pod[]) => void) {
   log.info('Commencing query for all pods');
   await trunk.connect();
-  const { rows }: { rows: Row[] } = await trunk.query(allPodsQuery);
+  // TS: the cursor api seems to change the return of query to be itself
+  // let's leave it as `any` for now.
+  const cursor: any = trunk.query(new Cursor<Row>(allPodsQuery) as any);
 
-  log.info(`Found ${rows.length} pods`);
+  type PromiseCallbackParameters = Parameters<
+    ConstructorParameters<typeof Promise>[0]
+  >;
+  type Resolve = PromiseCallbackParameters[0];
+  type Reject = PromiseCallbackParameters[0];
 
-  const pods: Pod[] = rows
-    .map(({ objectID, specificationData, downloads }: Row) => ({
-      objectID,
-      specificationData: JSON.parse(specificationData),
-      downloads,
-    }))
-    .map(formatPod);
+  function batch(resolve: Resolve, reject: Reject) {
+    cursor.read(10000, (err: Error | undefined, rows: Row[]) => {
+      if (err) {
+        reject(err);
+      }
 
-  log.info(`Will now index ${pods.length} pods`);
+      if (rows.length === 0) {
+        resolve();
+        return;
+      }
 
-  return pods;
+      log.info(`Found ${rows.length} pods`);
+
+      const pods: Pod[] = rows
+        .map(({ objectID, specificationData, downloads }: Row) => ({
+          objectID,
+          specificationData: JSON.parse(specificationData),
+          downloads,
+        }))
+        .map(formatPod);
+
+      onBatch(pods);
+      batch(resolve, reject);
+    });
+  }
+
+  return new Promise(batch);
 }
