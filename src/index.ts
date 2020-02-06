@@ -92,7 +92,9 @@ async function shouldRedoBootstrap() {
   } = await mainIndex.state.get();
   const currentTime = new Date().getTime();
   const timeDiff = currentTime - bootstrapLastFinished;
-  const shouldRedo = bootstrapDidFinish && timeDiff > bootstrapFrequency;
+  const shouldRedo =
+    (bootstrapDidFinish && timeDiff > bootstrapFrequency) ||
+    timeDiff > 2 * bootstrapFrequency;
 
   log.info(`Should we redo indexing ? ${shouldRedo ? 'yes' : 'no'}`, {
     bootstrapDidFinish,
