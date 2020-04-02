@@ -22,16 +22,30 @@ export function getAuthors({ authors }: SpecificationData) {
   return [...getAuthor(authors)];
 }
 
+export function normalizeName(name: string) {
+  switch (name) {
+    case 'Google inc.': {
+      return 'Google, inc.';
+    }
+    case 'Name': {
+      return '';
+    }
+    default: {
+      return name;
+    }
+  }
+}
+
 export function getAuthor(author?: { [name: string]: string } | string) {
   if (typeof author === 'string') {
     return [
       {
-        name: author,
+        name: normalizeName(author),
       },
     ];
   }
   return Object.entries(author || {}).map(([name, email]) => ({
-    name,
+    name: normalizeName(name),
     email,
     ...getAvatar(email),
   }));
