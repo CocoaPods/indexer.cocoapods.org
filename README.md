@@ -22,7 +22,7 @@ brew install node # simple
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.8/install.sh | bash # node version manager
 
 # Yarn
-brew install yarn --without-node
+brew install yarn
 ```
 
 Then clone the repo, install deps, and run tests:
@@ -44,6 +44,14 @@ Or alternatively:
 
 ```sh
 yarn build && yarn start
+```
+
+You'll see some errors telling you to set certain environment variables. For development you can use a personal [Algolia](https://www.algolia.com/) account. Set the following variables:
+
+```
+export ALGOLIA_APP_ID=<your-app-id>
+export ALGOLIA_API_KEY=<your-api-key>
+export ALGOLIA_INDEX_NAME=<your-index-name>
 ```
 
 I'd recommend using VS Code for editing, this project includes extension recommendations.
